@@ -1,0 +1,4 @@
+/.env
+/.idea
+/posts/migrations
+/db.sqlite3
