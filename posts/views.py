@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
-from django.views.generic import ListView, DeleteView
-from rest_framework.reverse import reverse_lazy
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DeleteView, UpdateView
+
 from posts.models import BlogPost
 
 
@@ -12,7 +13,8 @@ class BlogPostListView(ListView):
     def post(self, request, **kwargs):
         title = request.POST.get('title', '')
         text = request.POST.get('text', '')
-        BlogPost.objects.create(title=title, text=text)
+        image = request.FILES.get('image', '')
+        BlogPost.objects.create(title=title, text=text, image=image)
         return redirect('/')
 
     def get_queryset(self):
@@ -23,3 +25,11 @@ class BlogPostListView(ListView):
 class BlogPostDeleteView(DeleteView):
     model = BlogPost
     success_url = reverse_lazy('posts')
+
+
+class BlogPostUpdateView(UpdateView):
+    model = BlogPost
+    template_name = 'update-post.html'
+    fields = ['title', 'text']
+    success_url = reverse_lazy('posts')
+

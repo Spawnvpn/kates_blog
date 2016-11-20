@@ -5,36 +5,50 @@
         function submitForm(id) {
             document.getElementById(id).submit();
         }
+        $(".post-btn").click(function() {
+            $('.post-btn').slideToggle(600);
+            $('#toggle').slideToggle(600);
+        });
     </script>
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <form action="/" method="POST" name="blogpost">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Title" name="title" aria-describedby="basic-addon1">
-            </div>
-
-            <div class="form-group">
-                <textarea class="form-control text-field" rows="5" id="comment" name="text" placeholder="Enter your message here"></textarea>
-            </div>
-            <input type="submit" class="btn btn-info" value="Submit">
-        </form>
+    <button class="post-btn btn btn-default col-md-offset-5">New post</button>
+    <button class="post-btn btn btn-danger col-md-offset-5" id="post-cancel-btn">Cancel</button>
+        <div id="toggle" class=" col-md-offset-3">
+            <form action="/" method="POST" name="blogpost" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Title" name="title" aria-describedby="basic-addon1" required>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control text-field" rows="5" id="comment" name="text" placeholder="Enter your message here" required></textarea>
+                </div>
+                <input type="submit" class="btn btn-info" value="Submit">
+                <label class="btn btn-default btn-file">
+                    Browse
+                    <input name="image" type="file" style="display: none;">
+                </label>
+            </form>
+        </div>
         {% for post in posts_list %}
             {% if forloop.first %}<div class="row">{% endif %}
             <div class="col-md-10 blogpost">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">{{ post.title }}</h3>
-                        <span data-title="Delete" class="delete-btn glyphicon glyphicon-trash" onclick="submitForm({{ post.pk }})"></span>
+                        <span data-title="Delete" class="delete-btn glyphicon glyphicon-trash" onclick="submitForm('delete' + {{ post.pk }})"></span>
+                        <span data-title="Update" class="update-btn glyphicon glyphicon-pencil" onclick="submitForm('update' + {{ post.pk }})"></span>
                     </div>
-
-                    <form action="/delete-post/{{ post.id }}/" method="post" id="{{ post.pk }}">
+                    <form action="/delete-post/{{ post.id }}/" method="post" id="delete{{ post.pk }}">
+                        {% csrf_token %}
+                    </form>
+                    <form action="/update-post/{{ post.id }}/" method="get" id="update{{ post.pk }}">
                         {% csrf_token %}
                     </form>
                     <div class="panel-body">
-                        {{ post.text }}<small>{{ post.date }}</small>
+                        <p class="post-text">{{ post.text }}</p><small class="time">{{ post.date }}</small>
                     </div>
                 </div>
             </div>
