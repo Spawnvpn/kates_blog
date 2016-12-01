@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block script %}
+    <script src="/photos/static/spirit/js/demo-2.js"></script>
+    <script src="/photos/static/spirit/js/rAF.js"></script>
     <script>
         function submitForm(id) {
             document.getElementById(id).submit();
@@ -13,9 +16,44 @@
 {% endblock %}
 
 {% block content %}
-    <div class="header-container">
-        <h1 class="header">Kate's blog</h1>
+    <div id="carousel-example-generic" class="carousel slide container" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" >
+    <div class="item active">
+      <img src="{% static 'Desktop-Sky-Backgrounds.jpg' %}" alt="...">
+      <div class="carousel-caption">
+      	<h3 class="header one-header">Kate's Blog</h3>
+      </div>
     </div>
+    <div class="item">
+      <img src="{% static 'bg-sky-sz.png' %}" alt="...">
+      <div class="carousel-caption">
+      	<h3 class="header two-header">Kate's Blog</h3>
+      </div>
+    </div>
+    <div class="item">
+      <img src="{% static 'flying-air-balloon-wallpaper-1.jpg' %}" alt="...">
+      <div class="carousel-caption">
+      	<h3 class="header three-header">Kate's Blog</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div> <!-- Carousel -->
     <div class="container">
     <button class="post-btn btn btn-default col-md-offset-5">New post</button>
     <button class="post-btn btn btn-danger col-md-offset-5" id="post-cancel-btn">Cancel</button>
@@ -50,7 +88,12 @@
                     <form action="/update-post/{{ post.id }}/" method="get" id="update{{ post.pk }}">
                         {% csrf_token %}
                     </form>
-                    <div class="panel-body">
+                    {% if post.image %}
+                        <div class="panel-body block-image">
+                            <p><img class="post-image" src="{{ post.image.url }}"></p>
+                        </div>
+                    {% endif %}
+                    <div class="panel-body block-text">
                         <p class="post-text">{{ post.text }}</p><small class="time">{{ post.date }}</small>
                     </div>
                 </div>

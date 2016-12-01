@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<form action="/" method="post">{% csrf_token %}
+<form action="/update-post/{{ blogpost.id }}/" method="post">{% csrf_token %}
     <div class="container fieldWrapper">
         {{ form.errors }}
         <div class="form-group">
@@ -14,7 +14,7 @@
         <div class="form-group">
             <textarea class="form-control text-field" rows="5" name="text">{{ form.text.value }}</textarea>
         </div>
-        <input type="submit" value="Send message" />
+        <input class="btn btn-default" type="submit" value="Update"/>
     </div>
 </form>
 {% endblock %}

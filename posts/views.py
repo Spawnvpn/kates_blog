@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DeleteView, UpdateView
 
@@ -33,3 +33,6 @@ class BlogPostUpdateView(UpdateView):
     fields = ['title', 'text']
     success_url = reverse_lazy('posts')
 
+
+def about_me_view(request):
+    return render(request, template_name='bio.html')
