@@ -1,1 +1,1 @@
-web: gunicorn kates_blog.wsgi --log-file -
+web: gunicorn kates_blog.wsgi
