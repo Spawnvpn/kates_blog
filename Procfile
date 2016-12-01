@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: gunicorn kates_blog.wsgi --log-file -
