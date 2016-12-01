@@ -25,7 +25,7 @@ SECRET_KEY = 'qjg$_moz76%88k*_+as)+h7h+b7n%3ba3vjky&2tat4zg@cau*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kates-blog.herokuapp.com']
 
 CRISPY_TEMPLATE_PACK = 'uni_form'
 
